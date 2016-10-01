@@ -62,11 +62,11 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
     if self.path.endswith('default'):
       given_url = self.rfile.read(int(self.headers.getheader('Content-Length')))
       try:
-        f = open('default.url.cfg')
+        f = open('default.url.cfg', 'r+')
         f.truncate()
         f.write(given_url)
         f.close()
-        
+
         self.send_ok_response('Default URL was successfully updated to ' + given_url)
       except IOError:
         self.send_error(500, 'Error writing default URL file.')
