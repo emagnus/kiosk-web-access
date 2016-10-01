@@ -28,7 +28,7 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
   def do_POST(self):  
     if self.path.endswith('goto'):
 
-        url = self.rfile.read()
+        url = self.rfile.read(int(self.headers.getheader('Content-Length')))
 
         #send code 200 response
         self.send_response(200)
