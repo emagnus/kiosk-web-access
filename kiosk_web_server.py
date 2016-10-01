@@ -4,6 +4,10 @@ from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import os
 import subprocess
 
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 class KioskWebAccessHandler(BaseHTTPRequestHandler):
   def do_GET(self):
     if self.path.endswith('default'):
