@@ -41,8 +41,6 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
         #send file content to client
         self.wfile.write('Default URL (' + url + ') successfully loaded.')
         return
-      except IOError:
-        self.send_error(500, 'Error processing the given URL.')
 
 def run():
   print('Kiosk Web Access HTTP server is starting...')
