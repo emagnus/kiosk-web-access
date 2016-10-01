@@ -15,7 +15,18 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
         self.send_ok_response('Default URL (' + default_url + ') successfully loaded.')
       except IOError:
         self.send_error(500, 'Error reading default URL file.')
-  
+
+    if self.path.endswith('autostart'):
+      try:
+        f = open('default.url.cfg')
+        default_url = f.read()
+        self.send_response(303)
+        self.send_header('Location', default_url)
+        self.end_headers()
+      except IOError:
+        self.send_error(500, 'Error reading default URL file.')
+
+
   def do_POST(self):  
     if self.path.endswith('goto'):
         given_url = self.rfile.read(int(self.headers.getheader('Content-Length')))
