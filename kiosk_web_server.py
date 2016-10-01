@@ -30,6 +30,15 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
       except IOError:
         self.send_error(500, 'Error reading default URL file.')
 
+    if self.path.endswith('help'):
+      try:
+        f = open('help.html')
+        help_content = f.read()
+        self.send_ok_response(help_content)
+      except IOError:
+        self.send_error(500, 'Error reading help-file.')
+
+
 
   def do_POST(self):  
     if self.path.endswith('goto'):
@@ -43,7 +52,7 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
 
   def send_ok_response(self, response_text):
     self.send_response(200)
-    self.send_header('Content-type','text-html')
+    self.send_header('Content-type','text/html')
     self.end_headers()
     self.wfile.write(response_text)
 
