@@ -8,7 +8,7 @@
 
 <h2>Pien sin ip er: </h2>
 <h3>Ethernet: eth0</h3>
-<h3>Wifi: wlan0</h3>
+<h3>Wifi: wan0</h3>
 
 <h2>Bots?</h2>
 <p>Sjekk din lokale hubot med <em>botnavn byggskjerm hjelp</em> om deler av apiet under er implemetert</p>
@@ -22,12 +22,16 @@
 <h3>GET /default</h3>
 <p>Vis defaultsiden på pien</p>
 
+<h3>POST /default</h3>
+<h3>Body <em>ny-default-url</em></h3>
+<p>Oppdater defaulturl som skal vises ved oppstart.</p>
+
+<h3>POST /goto</h3>
+<h3>Body <em>ny-url</em></h3>
+<p>Vis urlen som sendes på pien</p>
 
 <h3>GET /hjelp</h3>
 <p>Returnerer denne siden</p>
-
-
-
 
 
 </body>
