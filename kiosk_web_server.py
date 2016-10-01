@@ -9,6 +9,8 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 class KioskWebAccessHandler(BaseHTTPRequestHandler):
+
+  # GET requests
   def do_GET(self):
     if self.path.endswith('default'):
       try:
@@ -24,6 +26,7 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
       try:
         f = open('default.url.cfg')
         default_url = f.read()
+        f.close()
         self.send_response(303)
         self.send_header('Location', default_url)
         self.end_headers()
@@ -48,13 +51,25 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
         self.send_error(500, 'Error reading help-file.')
 
 
-
+  # POST requests
   def do_POST(self):  
     if self.path.endswith('goto'):
-        given_url = self.rfile.read(int(self.headers.getheader('Content-Length')))
-        self.go_to_url(given_url)
+      given_url = self.rfile.read(int(self.headers.getheader('Content-Length')))
+      self.go_to_url(given_url)
 
-        self.send_ok_response('URL (' + given_url + ') successfully loaded.')
+      self.send_ok_response('URL (' + given_url + ') successfully loaded.')
+    
+    if self.path.endswith('default'):
+      given_url = self.rfile.read(int(self.headers.getheader('Content-Length')))
+      try:
+        f = open('default.url.cfg')
+        f.truncate()
+        f.write(given_url)
+        f.close()
+        
+        self.send_ok_response('Default URL was successfully updated to ' + given_url)
+      except IOError:
+        self.send_error(500, 'Error writing default URL file.')
 
   def go_to_url(self, url):
     subprocess.call(['./go_to_url.sh', url])
