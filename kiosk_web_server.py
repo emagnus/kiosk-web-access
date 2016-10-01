@@ -34,6 +34,15 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
       try:
         f = open('help.html')
         help_content = f.read()
+        try:
+          f = os.popen("ifconfig wlan0 | grep 'inet\ addr' | cut -d: -f2 | cut -d' ' -f1")
+          wlan0 = f.read();
+          f = os.popen("ifconfig eth0 | grep 'inet\ addr' | cut -d: -f2 | cut -d' ' -f1")
+          eth0 = f.read();
+          help_content = help_content.replace('wlan0', wlan0)
+          help_content = help_content.replace('eth0', eth0)
+        except IOError:
+          print('Fant ingen nettverksadresser')
         self.send_ok_response(help_content)
       except IOError:
         self.send_error(500, 'Error reading help-file.')

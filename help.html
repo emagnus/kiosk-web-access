@@ -6,22 +6,24 @@
 <body>
 <h1>Hjelp til byggeskjerm&pi</h1>
 
-<h2>Pien sin ip er: ip-adresse</h2>
+<h2>Pien sin ip er: </h2>
+<h3>Ethernet: eth0</h3>
+<h3>Wifi: wlan0</h3>
 
 <h2>Bots?</h2>
-<p>Sjekk din lokale hubot med <em>botnavn byggskjerm hjelp</em> om deler av apiet under er implemeter</p>
+<p>Sjekk din lokale hubot med <em>botnavn byggskjerm hjelp</em> om deler av apiet under er implemetert</p>
 
 
 <h2>API</h2>
 
-<h3>/autostart</h3>
+<h3>GET /autostart</h3>
 <p>Redirecter til default-url definert i default.url.cfg. Denne er i bruk ved reboot for at chromium skal finne en default-adresse</p>
 
-<h3>/default</h3>
+<h3>GET /default</h3>
 <p>Vis defaultsiden på pien</p>
 
 
-<h3>/hjelp</h3>
+<h3>GET /hjelp</h3>
 <p>Returnerer denne siden</p>
 
 
