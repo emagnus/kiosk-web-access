@@ -30,6 +30,8 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
         self.send_response(303)
         self.send_header('Location', default_url)
         self.end_headers()
+
+        self.hide_mouse_cursor()
       except IOError:
         self.send_error(500, 'Error reading default URL file.')
 
@@ -79,6 +81,9 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
     self.send_header('Content-type','text/html')
     self.end_headers()
     self.wfile.write(response_text)
+
+  def hide_mouse_cursor(self):
+    subprocess.call(['./hide_mouse_cursor.sh'])
 
 def run():
   print('Kiosk Web Access HTTP server is starting...')
