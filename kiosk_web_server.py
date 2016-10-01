@@ -10,38 +10,27 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
       try:
         f = open('default.url.cfg')
         default_url = f.read()
+        self.go_to_url(default_url)
 
-        #send code 200 response
-        self.send_response(200)
-
-        #send header first
-        self.send_header('Content-type','text-html')
-        self.end_headers()
-
-        subprocess.call(['./go_to_url.sh', default_url])
-
-        #send file content to client
-        self.wfile.write('Default URL (' + default_url + ') successfully loaded.')
-        return
+        self.send_response('Default URL (' + default_url + ') successfully loaded.')
       except IOError:
         self.send_error(500, 'Error reading default URL file.')
+  
   def do_POST(self):  
     if self.path.endswith('goto'):
-
         url = self.rfile.read(int(self.headers.getheader('Content-Length')))
+        self.go_to_url(url)
 
-        #send code 200 response
-        self.send_response(200)
+        self.send_response('URL (' + url + ') successfully loaded.')
 
-        #send header first
-        self.send_header('Content-type','text-html')
-        self.end_headers()
+  def go_to_url(url):
+    subprocess.call(['./go_to_url.sh', url])
 
-        subprocess.call(['./go_to_url.sh', url])
-
-        #send file content to client
-        self.wfile.write('Default URL (' + url + ') successfully loaded.')
-        return
+  def send_response(response_text):
+    self.send_response(200)
+    self.send_header('Content-type','text-html')
+    self.end_headers()
+    self.wfile.write(response_text)
 
 def run():
   print('Kiosk Web Access HTTP server is starting...')
