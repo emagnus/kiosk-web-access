@@ -25,7 +25,7 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
         return
       except IOError:
         self.send_error(500, 'Error reading default URL file.')
-  def do_GET(self):  
+  def do_POST(self):  
     if self.path.endswith('goto'):
 
         url = self.rfile.read()
