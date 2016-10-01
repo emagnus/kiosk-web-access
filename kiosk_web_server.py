@@ -12,21 +12,21 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
         default_url = f.read()
         self.go_to_url(default_url)
 
-        self.send_response('Default URL (' + default_url + ') successfully loaded.')
+        self.send_ok_response('Default URL (' + default_url + ') successfully loaded.')
       except IOError:
         self.send_error(500, 'Error reading default URL file.')
   
   def do_POST(self):  
     if self.path.endswith('goto'):
-        url = self.rfile.read(int(self.headers.getheader('Content-Length')))
-        self.go_to_url(url)
+        given_url = self.rfile.read(int(self.headers.getheader('Content-Length')))
+        self.go_to_url(given_url)
 
-        self.send_response('URL (' + url + ') successfully loaded.')
+        self.send_ok_response('URL (' + given_url + ') successfully loaded.')
 
-  def go_to_url(url):
+  def go_to_url(self, url):
     subprocess.call(['./go_to_url.sh', url])
 
-  def send_response(response_text):
+  def send_ok_response(self, response_text):
     self.send_response(200)
     self.send_header('Content-type','text-html')
     self.end_headers()
