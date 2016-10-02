@@ -44,8 +44,11 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
           wlan0 = f.read();
           f = os.popen("/sbin/ifconfig eth0 | grep 'inet\ addr' | cut -d: -f2 | cut -d' ' -f1")
           eth0 = f.read();
+          f = os.popen("hostname")
+          hostname0 = f.read();
           help_content = help_content.replace('wlan0', wlan0)
           help_content = help_content.replace('eth0', eth0)
+          help_content = help_content.replace('hostname0', hostname0)
         except IOError:
           print('Fant ingen nettverksadresser')
         self.send_ok_response(help_content)
