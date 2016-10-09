@@ -35,6 +35,14 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
       except IOError:
         self.send_error(500, 'Error reading default URL file.')
 
+    if self.path.endswith('infoskjerm'):
+      try:
+        f = open('infoskjerm.html')
+        infoskjerm_content = f.read()
+        self.send_ok_response(infoskjerm_content)
+      except IOError:
+        self.send_error(500, 'Error reading inforskjerm-file.')
+
     if self.path.endswith('help'):
       try:
         f = open('help.html')
