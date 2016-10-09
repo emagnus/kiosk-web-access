@@ -56,26 +56,6 @@ class KioskWebAccessHandler(BaseHTTPRequestHandler):
         self.send_error(500, 'Error reading help-file.')
 
 
-  # POST requests
-  def do_POST(self):  
-    if self.path.endswith('goto'):
-      given_url = self.rfile.read(int(self.headers.getheader('Content-Length')))
-      self.go_to_url(given_url)
-
-      self.send_ok_response('URL (' + given_url + ') successfully loaded.')
-    
-    if self.path.endswith('default'):
-      given_url = self.rfile.read(int(self.headers.getheader('Content-Length')))
-      try:
-        f = open('default.url.cfg', 'r+')
-        f.truncate()
-        f.write(given_url)
-        f.close()
-
-        self.send_ok_response('Default URL was successfully updated to ' + given_url)
-      except IOError:
-        self.send_error(500, 'Error writing default URL file.')
-
   def go_to_url(self, url):
     subprocess.call(['./go_to_url.sh', url])
 
