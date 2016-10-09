@@ -20,3 +20,8 @@ A small web server to remotely control Chromium via HTTP. Intended to be used in
 4. Edit crontab (`crontab -e`) and add autostart of the server: 
 `@reboot cd KWA_HOME && ./start.sh`
 5. Reboot the RPi
+
+## Packaging this as an image
+
+Do the steps above. Then follow [this tutorial](https://www.linuxvoice.com/build-your-own-linux-distro/)
+from the step `it’s time to package it into an archive`
