@@ -19,7 +19,10 @@ A small web server to remotely control Chromium via HTTP. Intended to be used in
 3. Clone this repo into some directory (let's call it KWA_HOME)
 4. Edit crontab (`crontab -e`) and add autostart of the server: 
 `@reboot cd KWA_HOME && ./start.sh`
-5. Reboot the RPi
+5. Install `apt-get install xscreensaver`
+and in the Display Mode-tab, set mode: Disable Screen Saver
+
+6. Reboot the RPi
 
 ## Packaging this as an image
 
